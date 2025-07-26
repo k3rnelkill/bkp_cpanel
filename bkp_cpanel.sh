@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVERNAME=$(hostname -s)
+SERVERNAME=$(hostname)
 BKPLOCALTMP="/backup/"
 BKPDATE=$(date +%Y-%m-%d)
 PATHS3="s3://${YOURBUCKET}/servidores/${SERVERNAME}/weekly/${BKPDATE}/accounts/"
@@ -10,7 +10,10 @@ BKPLOGGENERAL="backupgeral.log"
 YOURBUCKET=""
 
 #CRIANDO DIRETÓRIO DE LOGS, CASO NÃO EXISTA.
-[ -d ${LOGPATH} ] && mkdir ${LOGPATH}
+#[ -d "${LOGPATH}" ] || mkdir -p "${LOGPATH}"
+if [ ! -d "${LOGPATH}" ]; then
+    mkdir -p "${LOGPATH}"
+fi
 
 echo "++++++++++++++++++++++ $(date) ++++++++++++++++++++++"
 echo "CRIANDO DIRETORIO LOCAL e LISTA DE USUÀRIOS." | tee -a ${LOGPATH}${BKPLOGGENERAL}
